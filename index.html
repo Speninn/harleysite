@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harley.is - Harley-Davidson á Íslandi</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">Harley.is</div>
+            <ul class="nav-menu">
+                <li><a href="#home">Heim</a></li>
+                <li><a href="#motorcycles">Mótorhjól</a></li>
+                <li><a href="#about">Um okkur</a></li>
+                <li><a href="#contact">Hafa samband</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Frelsið bíður</h1>
+            <p class="hero-subtitle">Upplifðu Harley Davidson</p>
+            <a href="#motorcycles" class="cta-button">Skoða mótorhjól</a>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- Featured Motorcycles Section -->
+    <section class="motorcycles" id="motorcycles">
+        <div class="section-header">
+            <h2 class="section-title">Úrval mótorhjóla</h2>
+            <p class="section-subtitle">Kynntu þér nýjustu og vinsælustu mótorhjól Harley-Davidson</p>
+        </div>
+        
+        <div class="motorcycle-grid">
+            <!-- Sport -->
+            <div class="motorcycle-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&h=600&fit=crop&q=80" alt="Sportster S" class="motorcycle-image" onerror="this.src='https://via.placeholder.com/800x600/1a1a1a/FF6600?text=Sportster+S'">
+                </div>
+                <div class="card-content">
+                    <span class="category-badge">Sport</span>
+                    <h3>Sportster S</h3>
+                    <p>Nýjasti meðlimur Sportster fjölskyldunnar. Kraftmikill og háþróaður.</p>
+                    <ul class="specs">
+                        <li>121 hp Revolution Max 1250T vélin</li>
+                        <li>Fullt stafrænt Touchscreen Console</li>
+                        <li>Sportleg akstursstilling</li>
+                    </ul>
+                    <a href="https://www.harley-davidson.com/eu/en/motorcycles/sportster-s.html" target="_blank" rel="noopener noreferrer" class="card-link">Læra meira →</a>
+                </div>
+            </div>
+
+            <!-- Touring -->
+            <div class="motorcycle-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1609630875171-b1321377ee65?w=800&h=600&fit=crop&q=80" alt="Road Glide Limited" class="motorcycle-image" onerror="this.src='https://via.placeholder.com/800x600/1a1a1a/FF6600?text=Road+Glide+Limited'">
+                </div>
+                <div class="card-content">
+                    <span class="category-badge">Touring</span>
+                    <h3>Road Glide Limited</h3>
+                    <p>Fullkomið touring hjól fyrir langar ferðir í stíl.</p>
+                    <ul class="specs">
+                        <li>Milwaukee-Eight 114 vélin</li>
+                        <li>BOOM! GTS Infotainment kerfi</li>
+                        <li>Premium Project RUSHMORE þægindi</li>
+                    </ul>
+                    <a href="https://www.harley-davidson.com/eu/en/motorcycles/road-glide-limited.html" target="_blank" rel="noopener noreferrer" class="card-link">Læra meira →</a>
+                </div>
+            </div>
+
+            <!-- Cruiser -->
+            <div class="motorcycle-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&h=600&fit=crop&q=80" alt="Fat Boy 114" class="motorcycle-image" onerror="this.src='https://via.placeholder.com/800x600/1a1a1a/FF6600?text=Fat+Boy+114'">
+                </div>
+                <div class="card-content">
+                    <span class="category-badge">Cruiser</span>
+                    <h3>Fat Boy 114</h3>
+                    <p>Söguleg hönnun sem heldur áfram að skilgreina stíl.</p>
+                    <ul class="specs">
+                        <li>Milwaukee-Eight 114 vélin</li>
+                        <li>Klassísk Fat Boy hönnun</li>
+                        <li>Solid Disk hjól</li>
+                    </ul>
+                    <a href="https://www.harley-davidson.com/eu/en/motorcycles/fat-boy.html" target="_blank" rel="noopener noreferrer" class="card-link">Læra meira →</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Brand Story Section -->
+    <section class="brand-story" id="about">
+        <div class="story-content">
+            <div class="story-text">
+                <h2>Meira en mótorhjól</h2>
+                <p class="large-text">Síðan 1903 hefur Harley-Davidson staðið fyrir frelsi og ástríðu</p>
+                <p>Við bjóðum upp á besta úrvalið af Harley-Davidson mótorhjólum, varahlutum og þjónustu á Íslandi</p>
+                <p>Kíktu við, þú sérð ekki eftir því !</p>
+            </div>
+            <div class="story-image">
+                <img src="HARLEYLOGO.png" alt="Harley-Davidson Logo" class="brand-logo-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience">
+        <div class="experience-overlay"></div>
+        <div class="experience-content">
+            <h2>Vertu hluti af sögunni</h2>
+            <p>Komdu í heimsókn í verslanir okkar og upplifðu Harley-Davidson lífsstílinn</p>
+            <a href="#contact" class="cta-button secondary">Bóka reynsluakstur</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <h2>Komdu í heimsókn</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Staðsetning</h3>
+                    <p>Harley-Davidson Ísland<br>
+                    Reykjavík, Ísland</p>
+                </div>
+                <div class="contact-info">
+                    <h3>Opnunartímar</h3>
+                    <p>Mánudaga - Föstudaga: 9:00 - 18:00<br>
+                    Laugardaga: 10:00 - 16:00<br>
+                    Sunnudaga: Lokað</p>
+                </div>
+                <div class="contact-info">
+                    <h3>Hafðu samband</h3>
+                    <p>Sími: +354 XXX XXXX<br>
+                    Netfang: info@harley.is</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Person Section -->
+    <section class="contact-person">
+        <div class="contact-person-content">
+            <img src="jobbi.jpeg" alt="Jósef Smith" class="contact-person-image">
+            <div class="contact-person-info">
+                <h3>Jósef Smith</h3>
+                <p>Sími 865 1546</p>
+                <p>Jobbi@Harley.is</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Harley.is</h3>
+                <p>Frelsið bíður þín</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Fljótleiðir</h4>
+                    <ul>
+                        <li><a href="#motorcycles">Mótorhjól</a></li>
+                        <li><a href="#about">Um okkur</a></li>
+                        <li><a href="#contact">Hafa samband</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Þjónusta</h4>
+                    <ul>
+                        <li><a href="#">Viðgerðir</a></li>
+                        <li><a href="#">Varahlutir</a></li>
+                        <li><a href="#">Aukahlutir</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Fylgdu okkur</h4>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Harley-Davidson Ísland. Allur réttur áskilinn.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links (only internal anchors)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // Only prevent default for internal anchor links
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Header scroll effect
+        const header = document.querySelector('.header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.motorcycle-card, .story-content, .contact-info').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
