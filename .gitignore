@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.DS_Store
+
+# Whisper models (too large for GitHub)
+whisper.cpp/models/*.bin
+whisper.cpp/build/
+
+# Temp files
+uploads/*
+!uploads/.gitkeep
+*.wav
+.!*

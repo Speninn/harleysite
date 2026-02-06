@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Whisper Transcription</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    main{max-width:800px;margin:48px auto;padding:16px}
+    pre{white-space:pre-wrap;background:#111;color:#eee;padding:12px;border-radius:6px;min-height:120px;font-size:14px}
+    .output-section{margin-bottom:24px}
+    .output-section h3{display:flex;justify-content:space-between;align-items:center}
+    .download-btn{background:#0066cc;color:white;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-size:12px}
+    .download-btn:hover{background:#0055aa}
+    .download-btn:disabled{background:#666;cursor:not-allowed}
+    #transcribe-btn{background:#00aa55;color:white;border:none;padding:12px 24px;border-radius:4px;cursor:pointer;font-size:16px;margin-top:12px}
+    #transcribe-btn:hover{background:#008844}
+    #transcribe-btn:disabled{background:#666;cursor:not-allowed}
+    .timecode{color:#00ccff;font-weight:bold}
+    .status{padding:8px;border-radius:4px;margin:12px 0;display:none}
+    .status.show{display:block}
+    .status.processing{background:#333;color:#ffcc00}
+    .tabs{display:flex;gap:4px;margin-bottom:-1px}
+    .tab{padding:8px 16px;background:#222;border:1px solid #333;border-bottom:none;border-radius:4px 4px 0 0;cursor:pointer;color:#aaa}
+    .tab.active{background:#111;color:#fff;border-color:#444}
+    #audio-file{margin:12px 0}
+  </style>
+</head>
+<body>
+  <header style="padding:12px;">
+    <a href="/index.html">← Back to site</a>
+  </header>
+  <main>
+    <h1>🎙️ Whisper Transcription</h1>
+    <p>Upload an audio file (mp3, wav, m4a) and receive a transcript with <strong>SRT timecodes</strong>.</p>
+    <p><small>Using Whisper Large-v3 model • Icelandic language</small></p>
+    
+    <form id="transcribe-form">
+      <input type="file" id="audio-file" name="file" accept="audio/*" required>
+      <br>
+      <button type="submit" id="transcribe-btn">🎬 Transcribe</button>
+    </form>
+    
+    <div id="status" class="status"></div>
+    
+    <div class="output-section">
+      <div class="tabs">
+        <div class="tab active" data-tab="srt">SRT (Timecodes)</div>
+        <div class="tab" data-tab="text">Plain Text</div>
+      </div>
+      
+      <div id="srt-section">
+        <div style="display:flex;justify-content:flex-end;padding:8px;background:#111;border-radius:0 6px 0 0">
+          <button class="download-btn" id="download-srt" disabled>⬇️ Download SRT</button>
+        </div>
+        <pre id="srt-result">No transcript yet. Upload an audio file to get started.</pre>
+      </div>
+      
+      <div id="text-section" style="display:none">
+        <pre id="text-result">No transcript yet.</pre>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('transcribe-form');
+    const fileInput = document.getElementById('audio-file');
+    const btn = document.getElementById('transcribe-btn');
+    const srtResult = document.getElementById('srt-result');
+    const textResult = document.getElementById('text-result');
+    const downloadBtn = document.getElementById('download-srt');
+    const statusEl = document.getElementById('status');
+    const tabs = document.querySelectorAll('.tab');
+    const srtSection = document.getElementById('srt-section');
+    const textSection = document.getElementById('text-section');
+    
+    let currentSrt = '';
+    let fileName = 'transcript';
+    
+    // Tab switching
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        if (tab.dataset.tab === 'srt') {
+          srtSection.style.display = 'block';
+          textSection.style.display = 'none';
+        } else {
+          srtSection.style.display = 'none';
+          textSection.style.display = 'block';
+        }
+      });
+    });
+    
+    // Download SRT
+    downloadBtn.addEventListener('click', () => {
+      if (!currentSrt) return;
+      const blob = new Blob([currentSrt], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName + '.srt';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!fileInput.files.length) return;
+      
+      fileName = fileInput.files[0].name.replace(/\.[^/.]+$/, '');
+      
+      btn.disabled = true;
+      btn.textContent = '⏳ Processing...';
+      downloadBtn.disabled = true;
+      srtResult.textContent = '';
+      textResult.textContent = '';
+      
+      statusEl.className = 'status show processing';
+      statusEl.textContent = '🔄 Converting audio and running transcription with Large-v3 model... This may take a few minutes.';
+      
+      try {
+        const fd = new FormData();
+        fd.append('file', fileInput.files[0]);
+
+        const res = await fetch('/transcribe', { method: 'POST', body: fd });
+        if (!res.ok) {
+          const txt = await res.text();
+          throw new Error(txt || res.statusText);
+        }
+        const data = await res.json();
+        
+        // Display SRT with syntax highlighting
+        currentSrt = data.srt || '';
+        if (currentSrt) {
+          srtResult.innerHTML = highlightSrt(currentSrt);
+          downloadBtn.disabled = false;
+        } else {
+          srtResult.textContent = 'No SRT data available';
+        }
+        
+        textResult.textContent = data.text || 'No text available';
+        
+        statusEl.className = 'status show';
+        statusEl.style.background = '#003300';
+        statusEl.style.color = '#00ff00';
+        statusEl.textContent = '✅ Transcription complete!';
+        
+      } catch (err) {
+        srtResult.textContent = 'Error: ' + err.message;
+        textResult.textContent = 'Error: ' + err.message;
+        statusEl.className = 'status show';
+        statusEl.style.background = '#330000';
+        statusEl.style.color = '#ff0000';
+        statusEl.textContent = '❌ Error: ' + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🎬 Transcribe';
+      }
+    });
+    
+    function highlightSrt(srt) {
+      // Highlight timecodes in SRT format
+      return srt
+        .replace(/(\d{2}:\d{2}:\d{2},\d{3})/g, '<span class="timecode">$1</span>')
+        .replace(/-->/g, '<span style="color:#888">→</span>');
+    }
+  </script>
+</body>
+</html>

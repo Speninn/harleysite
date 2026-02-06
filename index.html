@@ -168,6 +168,19 @@
         </div>
     </section>
 
+    <!-- Whisper Transcription Section -->
+    <section class="whisper" id="whisper">
+        <div class="whisper-content">
+            <h2>Audio Transcription (Whisper)</h2>
+            <p>Upload a short audio file (mp3, wav, m4a) and get a transcript using Whisper.</p>
+            <form id="transcribe-form">
+                <input type="file" id="audio-file" name="file" accept="audio/*" required>
+                <button type="submit" id="transcribe-btn">Transcribe</button>
+            </form>
+            <div id="transcript-result" class="transcript-result" aria-live="polite"></div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
@@ -268,6 +281,44 @@
         document.querySelectorAll('.motorcycle-card, .story-content, .contact-info').forEach(el => {
             observer.observe(el);
         });
+
+        // Whisper transcription form handling
+        const transcribeForm = document.getElementById('transcribe-form');
+        if (transcribeForm) {
+            transcribeForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const fileInput = document.getElementById('audio-file');
+                const btn = document.getElementById('transcribe-btn');
+                const resultEl = document.getElementById('transcript-result');
+                if (!fileInput || !fileInput.files.length) return;
+                btn.disabled = true;
+                btn.textContent = 'Transcribing...';
+                resultEl.textContent = '';
+
+                try {
+                    const fd = new FormData();
+                    fd.append('file', fileInput.files[0]);
+
+                    const res = await fetch('/transcribe', {
+                        method: 'POST',
+                        body: fd
+                    });
+
+                    if (!res.ok) {
+                        const txt = await res.text();
+                        throw new Error(txt || res.statusText);
+                    }
+
+                    const data = await res.json();
+                    resultEl.textContent = data.text || JSON.stringify(data);
+                } catch (err) {
+                    resultEl.textContent = 'Error: ' + err.message;
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Transcribe';
+                }
+            });
+        }
     </script>
 </body>
 </html>
