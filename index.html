@@ -3,167 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harley.is - Harley-Davidson á Íslandi</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Icelandic Whisper - Transcribe Icelandic audio to SRT subtitles with AI">
+    <title>Icelandic Whisper | Audio Transcription</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Transcribing audio...</div>
+        <div class="loading-subtext">Using Whisper large-v3 for best Icelandic accuracy</div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <nav class="nav-container">
-            <div class="logo">Harley.is</div>
-            <ul class="nav-menu">
-                <li><a href="#home">Heim</a></li>
-                <li><a href="#motorcycles">Mótorhjól</a></li>
-                <li><a href="#about">Um okkur</a></li>
-                <li><a href="#contact">Hafa samband</a></li>
-            </ul>
-            <div class="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="logo-wrapper">
+                <div class="logo">🇮🇸 WHISPER.IS</div>
+                <div class="logo-subtitle">Icelandic Transcription</div>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-overlay"></div>
+    <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Frelsið bíður</h1>
-            <p class="hero-subtitle">Upplifðu Harley Davidson</p>
-            <a href="#motorcycles" class="cta-button">Skoða mótorhjól</a>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse"></div>
-        </div>
-    </section>
-
-    <!-- Featured Motorcycles Section -->
-    <section class="motorcycles" id="motorcycles">
-        <div class="section-header">
-            <h2 class="section-title">Úrval mótorhjóla</h2>
-            <p class="section-subtitle">Kynntu þér nýjustu og vinsælustu mótorhjól Harley-Davidson</p>
-        </div>
-        
-        <div class="motorcycle-grid">
-            <!-- Sport -->
-            <div class="motorcycle-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&h=600&fit=crop&q=80" alt="Sportster S" class="motorcycle-image" onerror="this.src='https://via.placeholder.com/800x600/1a1a1a/FF6600?text=Sportster+S'">
-                </div>
-                <div class="card-content">
-                    <span class="category-badge">Sport</span>
-                    <h3>Sportster S</h3>
-                    <p>Nýjasti meðlimur Sportster fjölskyldunnar. Kraftmikill og háþróaður.</p>
-                    <ul class="specs">
-                        <li>121 hp Revolution Max 1250T vélin</li>
-                        <li>Fullt stafrænt Touchscreen Console</li>
-                        <li>Sportleg akstursstilling</li>
-                    </ul>
-                    <a href="https://www.harley-davidson.com/eu/en/motorcycles/sportster-s.html" target="_blank" rel="noopener noreferrer" class="card-link">Læra meira →</a>
-                </div>
+            <span class="hero-icon">🎙️</span>
+            <div class="iceland-badge">
+                <span>🇮🇸</span>
+                <span>Íslenska</span>
             </div>
+            <h1 class="hero-title">Icelandic Audio<br>to SRT Subtitles</h1>
+            <p class="hero-subtitle">
+                Upload your Icelandic audio and get accurate transcriptions with timecodes.<br>
+                Powered by OpenAI Whisper large-v3 — 100% local, free, and private.
+            </p>
 
-            <!-- Touring -->
-            <div class="motorcycle-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1609630875171-b1321377ee65?w=800&h=600&fit=crop&q=80" alt="Road Glide Limited" class="motorcycle-image" onerror="this.src='https://via.placeholder.com/800x600/1a1a1a/FF6600?text=Road+Glide+Limited'">
-                </div>
-                <div class="card-content">
-                    <span class="category-badge">Touring</span>
-                    <h3>Road Glide Limited</h3>
-                    <p>Fullkomið touring hjól fyrir langar ferðir í stíl.</p>
-                    <ul class="specs">
-                        <li>Milwaukee-Eight 114 vélin</li>
-                        <li>BOOM! GTS Infotainment kerfi</li>
-                        <li>Premium Project RUSHMORE þægindi</li>
-                    </ul>
-                    <a href="https://www.harley-davidson.com/eu/en/motorcycles/road-glide-limited.html" target="_blank" rel="noopener noreferrer" class="card-link">Læra meira →</a>
-                </div>
-            </div>
+            <!-- Transcription Card -->
+            <div class="transcription-card">
+                <form id="transcribe-form">
+                    <label class="upload-area" for="audio-file" id="upload-area">
+                        <span class="upload-icon">📁</span>
+                        <div class="upload-text">Drop audio file here or click to browse</div>
+                        <div class="upload-hint">Supports MP3, WAV, M4A, OGG, FLAC</div>
+                    </label>
+                    <input type="file" id="audio-file" name="file" accept="audio/*" required>
+                    
+                    <div class="file-selected" id="file-selected" style="display: none;">
+                        <span class="file-icon">🎵</span>
+                        <div class="file-info">
+                            <div class="file-name" id="file-name">filename.mp3</div>
+                            <div class="file-size" id="file-size">2.5 MB</div>
+                        </div>
+                    </div>
 
-            <!-- Cruiser -->
-            <div class="motorcycle-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&h=600&fit=crop&q=80" alt="Fat Boy 114" class="motorcycle-image" onerror="this.src='https://via.placeholder.com/800x600/1a1a1a/FF6600?text=Fat+Boy+114'">
-                </div>
-                <div class="card-content">
-                    <span class="category-badge">Cruiser</span>
-                    <h3>Fat Boy 114</h3>
-                    <p>Söguleg hönnun sem heldur áfram að skilgreina stíl.</p>
-                    <ul class="specs">
-                        <li>Milwaukee-Eight 114 vélin</li>
-                        <li>Klassísk Fat Boy hönnun</li>
-                        <li>Solid Disk hjól</li>
-                    </ul>
-                    <a href="https://www.harley-davidson.com/eu/en/motorcycles/fat-boy.html" target="_blank" rel="noopener noreferrer" class="card-link">Læra meira →</a>
-                </div>
-            </div>
+                    <button type="submit" class="submit-button" id="submit-btn" disabled>
+                        ⚡ Transcribe Audio
+                    </button>
+                </form>
 
-        </div>
-    </section>
+                <!-- Results Section -->
+                <div class="results-section" id="results">
+                    <div class="result-tabs">
+                        <button class="tab-button active" id="tab-txt" onclick="showTab('txt')">📝 Text</button>
+                        <button class="tab-button" id="tab-srt" onclick="showTab('srt')">⏱️ SRT (Subtitles)</button>
+                    </div>
+                    
+                    <div class="result-content">
+                        <div class="txt-content visible" id="txt-content">
+                            <pre class="result-text" id="result-text"></pre>
+                        </div>
+                        <div class="srt-content" id="srt-content">
+                            <pre class="result-text" id="result-srt"></pre>
+                        </div>
+                    </div>
 
-    <!-- Brand Story Section -->
-    <section class="brand-story" id="about">
-        <div class="story-content">
-            <div class="story-text">
-                <h2>Meira en mótorhjól</h2>
-                <p class="large-text">Síðan 1903 hefur Harley-Davidson staðið fyrir frelsi og ástríðu</p>
-                <p>Við bjóðum upp á besta úrvalið af Harley-Davidson mótorhjólum, varahlutum og þjónustu á Íslandi</p>
-                <p>Kíktu við, þú sérð ekki eftir því !</p>
-            </div>
-            <div class="story-image">
-                <img src="HARLEYLOGO.png" alt="Harley-Davidson Logo" class="brand-logo-image">
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section class="experience">
-        <div class="experience-overlay"></div>
-        <div class="experience-content">
-            <h2>Vertu hluti af sögunni</h2>
-            <p>Komdu í heimsókn í verslanir okkar og upplifðu Harley-Davidson lífsstílinn</p>
-            <a href="#contact" class="cta-button secondary">Bóka reynsluakstur</a>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="contact-content">
-            <h2>Komdu í heimsókn</h2>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h3>Staðsetning</h3>
-                    <p>Harley-Davidson Ísland<br>
-                    Reykjavík, Ísland</p>
-                </div>
-                <div class="contact-info">
-                    <h3>Opnunartímar</h3>
-                    <p>Mánudaga - Föstudaga: 9:00 - 18:00<br>
-                    Laugardaga: 10:00 - 16:00<br>
-                    Sunnudaga: Lokað</p>
-                </div>
-                <div class="contact-info">
-                    <h3>Hafðu samband</h3>
-                    <p>Sími: +354 XXX XXXX<br>
-                    Netfang: info@harley.is</p>
+                    <div class="result-actions">
+                        <button class="copy-button" onclick="copyResult()">
+                            📋 Copy
+                        </button>
+                        <button class="download-button" onclick="downloadSRT()">
+                            ⬇️ Download SRT
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Person Section -->
-    <section class="contact-person">
-        <div class="contact-person-content">
-            <img src="jobbi.jpeg" alt="Jósef Smith" class="contact-person-image">
-            <div class="contact-person-info">
-                <h3>Jósef Smith</h3>
-                <p>Sími 865 1546</p>
-                <p>Jobbi@Harley.is</p>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🇮🇸</span>
+                <h3>Optimized for Icelandic</h3>
+                <p>Uses the large-v3 model with forced Icelandic language detection for maximum accuracy.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">⏱️</span>
+                <h3>SRT Subtitles</h3>
+                <p>Get properly formatted SRT files with accurate timecodes, ready for video editing.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🔒</span>
+                <h3>100% Private</h3>
+                <p>All processing happens locally on your computer. No data sent to external servers.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💰</span>
+                <h3>Completely Free</h3>
+                <p>No API costs, no subscriptions. Uses local Whisper.cpp for transcription.</p>
             </div>
         </div>
     </section>
@@ -171,102 +123,156 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-brand">
-                <h3>Harley.is</h3>
-                <p>Frelsið bíður þín</p>
-            </div>
+            <div class="footer-logo">WHISPER.IS</div>
+            <p class="footer-text">Icelandic Audio Transcription — Powered by Whisper.cpp</p>
             <div class="footer-links">
-                <div class="footer-column">
-                    <h4>Fljótleiðir</h4>
-                    <ul>
-                        <li><a href="#motorcycles">Mótorhjól</a></li>
-                        <li><a href="#about">Um okkur</a></li>
-                        <li><a href="#contact">Hafa samband</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Þjónusta</h4>
-                    <ul>
-                        <li><a href="#">Viðgerðir</a></li>
-                        <li><a href="#">Varahlutir</a></li>
-                        <li><a href="#">Aukahlutir</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Fylgdu okkur</h4>
-                    <ul>
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">YouTube</a></li>
-                    </ul>
-                </div>
+                <a href="https://github.com/ggerganov/whisper.cpp" target="_blank">whisper.cpp</a>
+                <a href="https://github.com/openai/whisper" target="_blank">OpenAI Whisper</a>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Harley-Davidson Ísland. Allur réttur áskilinn.</p>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links (only internal anchors)
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                // Only prevent default for internal anchor links
-                const href = this.getAttribute('href');
-                if (href && href.startsWith('#')) {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                }
-            });
+        const form = document.getElementById('transcribe-form');
+        const fileInput = document.getElementById('audio-file');
+        const uploadArea = document.getElementById('upload-area');
+        const fileSelected = document.getElementById('file-selected');
+        const fileName = document.getElementById('file-name');
+        const fileSize = document.getElementById('file-size');
+        const submitBtn = document.getElementById('submit-btn');
+        const loading = document.getElementById('loading');
+        const results = document.getElementById('results');
+        const resultText = document.getElementById('result-text');
+        const resultSrt = document.getElementById('result-srt');
+
+        let currentText = '';
+        let currentSrt = '';
+        let currentTab = 'txt';
+
+        // Drag and drop handling
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
         });
 
-        // Header scroll effect
-        const header = document.querySelector('.header');
-        let lastScroll = 0;
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
 
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            
-            if (currentScroll > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type.startsWith('audio/')) {
+                fileInput.files = files;
+                handleFileSelect(files[0]);
             }
+        });
+
+        // File selection
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        function handleFileSelect(file) {
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileSelected.style.display = 'flex';
+            uploadArea.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            lastScroll = currentScroll;
-        });
+            if (!fileInput.files.length) return;
 
-        // Mobile menu toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navMenu = document.querySelector('.nav-menu');
+            loading.classList.add('visible');
+            results.classList.remove('visible');
+            submitBtn.disabled = true;
 
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
 
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
+            try {
+                const response = await fetch('/transcribe', {
+                    method: 'POST',
+                    body: formData
+                });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
+                const data = await response.json();
+
+                if (response.ok) {
+                    currentText = data.text || '';
+                    currentSrt = data.srt || '';
+                    resultText.textContent = currentText;
+                    resultSrt.textContent = currentSrt || 'No SRT data available';
+                    results.classList.add('visible');
+                } else {
+                    alert('Error: ' + (data.error || 'Transcription failed'));
                 }
-            });
-        }, observerOptions);
+            } catch (err) {
+                alert('Error: ' + err.message);
+            } finally {
+                loading.classList.remove('visible');
+                submitBtn.disabled = false;
+            }
+        });
 
-        document.querySelectorAll('.motorcycle-card, .story-content, .contact-info').forEach(el => {
-            observer.observe(el);
+        // Tab switching
+        function showTab(tab) {
+            currentTab = tab;
+            document.getElementById('tab-txt').classList.toggle('active', tab === 'txt');
+            document.getElementById('tab-srt').classList.toggle('active', tab === 'srt');
+            document.getElementById('txt-content').classList.toggle('visible', tab === 'txt');
+            document.getElementById('srt-content').classList.toggle('visible', tab === 'srt');
+        }
+
+        // Copy result
+        function copyResult() {
+            const text = currentTab === 'txt' ? currentText : currentSrt;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-button');
+                btn.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    btn.innerHTML = '📋 Copy';
+                }, 2000);
+            });
+        }
+
+        // Download SRT
+        function downloadSRT() {
+            if (!currentSrt) {
+                alert('No SRT content available');
+                return;
+            }
+            const blob = new Blob([currentSrt], { type: 'text/srt' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = (fileName.textContent.replace(/\.[^/.]+$/, '') || 'transcription') + '.srt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Reset form to upload another file
+        fileSelected.addEventListener('click', () => {
+            fileInput.value = '';
+            fileSelected.style.display = 'none';
+            uploadArea.style.display = 'block';
+            submitBtn.disabled = true;
+            results.classList.remove('visible');
         });
     </script>
 </body>
